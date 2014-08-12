@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "62f318a9da72146052dee5aa61cc051c",
+    "hash": "f9af018834df9ce2dc6e5f048260cc94",
     "packages": [
         {
             "name": "link/link",
@@ -49,6 +49,101 @@
                 "router"
             ],
             "time": "2014-06-20 20:51:34"
+        },
+        {
+            "name": "parse/php-sdk",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ParsePlatform/parse-php-sdk.git",
+                "reference": "c237d06cc721a9da2e63caec8b4c684791c6e2a9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ParsePlatform/parse-php-sdk/zipball/c237d06cc721a9da2e63caec8b4c684791c6e2a9",
+                "reference": "c237d06cc721a9da2e63caec8b4c684791c6e2a9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpdocumentor/phpdocumentor": "*",
+                "phpunit/phpunit": "3.7.*",
+                "squizlabs/php_codesniffer": "1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Parse\\": "src/Parse/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Parse Platform License"
+            ],
+            "authors": [
+                {
+                    "name": "Parse",
+                    "homepage": "https://github.com/parseplatform/parse-php-sdk/contributors"
+                }
+            ],
+            "description": "Parse PHP SDK",
+            "homepage": "https://github.com/parseplatform/parse-php-sdk",
+            "keywords": [
+                "parse",
+                "sdk"
+            ],
+            "time": "2014-08-04 22:22:17"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "dev-master",
+            "target-dir": "Symfony/Component/Yaml",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Yaml.git",
+                "reference": "d84b97a12046b2c34e8457626b9f2b72dec0c183"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/d84b97a12046b2c34e8457626b9f2b72dec0c183",
+                "reference": "d84b97a12046b2c34e8457626b9f2b72dec0c183",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Yaml\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Symfony Yaml Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-08-05 09:07:51"
         },
         {
             "name": "twig/twig",
@@ -112,7 +207,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "link/link": 20
+        "link/link": 20,
+        "symfony/yaml": 20
     },
     "prefer-stable": false,
     "platform": [],
