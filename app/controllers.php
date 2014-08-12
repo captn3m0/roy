@@ -15,8 +15,9 @@ class Controller {
   }
 }
 class TeamController extends Controller{
-  function get(){
-    echo $this->render('team.twig');
+  function get($team){
+    $items = Item::get($team);
+    echo $this->render('team.twig', ['items'=>$items]);
   }
 }
 

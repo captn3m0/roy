@@ -17,6 +17,9 @@
   </nav>
   <article>
     <ul>
+      {% for item in items %}
+      <li data-created="{{ item.get('timestamp')|round|date }}" data-channel="{{ item.get('channel_name') }}" data-creator="@{{ item.get('user_name') }}">{{ item.get('text')|remove_first_word }} - #{{ item.get('channel_name') }}</li>
+      {% endfor %}
     </ul>
   </article>
   <script src="assets/js/script.js"></script>
