@@ -10,7 +10,9 @@ $routes = array(
     '/item' => 'ItemController',
     '/{a}' => 'TeamController',
     '/{a}/calendar' => 'TeamCalendarController',
-    '/{a}/settings' => 'SettingsController'
+    '/{a}/settings' => 'SettingsController',
+    '/oauth' => 'OAuthController',
+    '/oauth/callback' => 'CallbackController'
 );
 
 Link::all($routes);
