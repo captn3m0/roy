@@ -49,12 +49,13 @@ $(document).ready(function(){
 
 $(window).load(function(){
   $('article li').each(function(i, item){
-    $(item).tooltipster({
+    var $item = $(item);
+    $item.tooltipster({
       content: $('<span><a href="#/done/">done</a></span>'),
       position: "left"
     });
-    $(item).tooltipster({
-      content: $('<span>Created on: 12th Jan 5:30pm. <br> Channel: #muzi <br> Creator: @nemo</span>'),
+    $item.tooltipster({
+      content: $('<span>Created on: '+$item.data('created')+'. <br> Channel: '+$item.data('channel')+' <br> Creator: '+$item.data('creator')+'</span>'),
       position: "top"
     });
   });
