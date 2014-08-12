@@ -1,0 +1,19 @@
+{
+  "name": "captn3m0/roy",
+  "type": "project",
+  "description": "A simple task manager for slack users",
+  "keywords": [
+    "roy",
+    "slack",
+    "todo"
+  ],
+  "authors": [{
+    "name": "Abhay Rana",
+    "email": "capt.n3m0@gmail.com",
+    "homepage": "http://captnemo.in"
+  }],
+  "require": {
+    "link/link" : "dev-master",
+    "twig/twig": "1.*"
+  }
+}
