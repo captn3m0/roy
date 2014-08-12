@@ -11,8 +11,12 @@ $routes = array(
     '/{a}' => 'TeamController',
     '/{a}/calendar' => 'TeamCalendarController',
     '/{a}/settings' => 'SettingsController',
+    '/{a}/users/update' => 'UpdateUsersController',
     '/oauth' => 'OAuthController',
-    '/oauth/callback' => 'CallbackController'
+    '/oauth/callback' => 'CallbackController',
+    '/session' => 'SessionController'
 );
-
+Link::before(function(){
+  session_start();
+});
 Link::all($routes);

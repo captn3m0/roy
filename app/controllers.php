@@ -15,6 +15,9 @@ class Controller {
     return $this->json($json);
   }
   function redirect($link){
+    if(substr($link,0,4) !== 'http'){
+      $link = $this->config('BASE_URI').$link;
+    }
     header("Location: $link");
     exit;
   }
@@ -25,8 +28,29 @@ class Controller {
 }
 class TeamController extends Controller{
   function get($team){
-    $items = Item::get($team);
-    echo $this->render('team.twig', ['items'=>$items]);
+    if($_SESSION['team'] == $team){
+      $items = Item::get($team);
+      $team = $team = Team::find($team);
+      if($team){
+        //$users = User::
+        echo $this->render('team.twig', ['items'=>$items]);
+      }
+      else{
+        throw new Exception("No such team");
+      }
+    }
+    else{
+      // We redirect to the oauth page
+      // Get the team's slack id, if available
+      $team = Team::find($team);
+      if($team){
+        $this->redirect("oauth?team={$team->team_id}");
+      }
+      else{
+        $this->redirect("oauth");
+      }
+      
+    }
   }
 }
 
@@ -43,7 +67,8 @@ class OAuthController extends Controller{
     $qs = http_build_query([
       'client_id' => $this->config('SLACK_ID'),
       'redirect_uri'=>$config['BASE_URI'].'oauth/callback',
-      'scope'=>'identify,read'
+      'scope'=>'identify,read',
+      'team'=>$_GET['team']
     ]);
     $this->redirect("https://slack.com/oauth/authorize?$qs");
   }
@@ -65,16 +90,42 @@ class CallbackController extends Controller{
       $response = $slack->prepare('auth.test')->send();
 
       // Store the access token and team
+      $team_name = strtolower($response->team);
       Token::update_or_add($response->team_id, $json->access_token, $response->user);
-      Team::find_or_create($response->team, $response->team_id);
+      Team::find_or_create($team_name, $response->team_id);
 
-      // Store the team's member list
-      $userlist = $slack->prepare('users.list')->send();
-      User::add($userlist->members);
-      $this->redirect($config['BASE_URI']);
+      // Login the user
+      $_SESSION['user'] = $response->user;
+      $_SESSION['team'] = $team_name;
+
+      $this->redirect($team_name);
     }
     else{
       throw new Exception("Error in oauth");
+    }
+  }
+}
+
+class SessionController extends Controller{
+  function get(){
+    echo $this->json($_SESSION);
+  }
+}
+
+class UpdateUsersController extends Controller{
+  // Expects team name
+  function get($team){
+    $items = Item::get($team);
+    $team = $team = Team::find($team);
+    if($team){
+      $token = Team::get_token($team->team_id);
+      $slack = new ConnorVG\Slack\Slack($token);
+      $userlist = $slack->prepare('users.list')->send();
+      User::add($userlist->members, $team->team_id);
+      echo "User list updated";
+    }
+    else{
+      throw new Exception("No such team");
     }
   }
 }

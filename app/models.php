@@ -32,11 +32,12 @@ class Team{
   static function get($id){
     $query = new ParseQuery("Team");
     $query->equalTo("team_id", $id);
-    $result = $query->find();
-    if(count($result) > 0)
-      return $result[0];
-    else
-      return false;
+    return $query->first();
+  }
+  static function find($name){
+    $query = new ParseQuery("Team");
+    $query->equalTo("name", $name);
+    return $query->first();
   }
   static function find_or_create($name, $id){
     $team = self::get($id);
@@ -45,30 +46,33 @@ class Team{
     else
       return self::create($name, $id);
   }
+  static function get_token($team_id){
+    $query = new ParseQuery("Token");
+    $query->equalTo("team_id", $team_id);
+    return $query->first()->token;
+  }
 }
 
 class User{
-  static function create($nick, $id){
+  static function create($nick, $id, $team_id){
     $parse_obj = ParseObject::create("User");
     $parse_obj->nick = $nick;
     $parse_obj->user_id = $id;
+    $parse_obj->team = $team_id;
     $parse_obj->save();
   }
   // Get a user by its unique slack id (not nick)
   static function get($id){
     $query = new ParseQuery("User");
     $query->equalTo("user_id", $id);
-    $result = $query->find();
-    if(count($result) > 0)
-      return $result[0];
-    else
-      return false;
+    return $query->first();
   }
-  static function add($userlist){
+
+  static function add($userlist, $team_id){
     foreach($userlist as $user){
       $user_in_db = self::get($user->id);
       if(!$user_in_db)
-        self::create($user->name, $user->id);
+        self::create($user->name, $user->id, $team_id);
     }
   }
 }
@@ -88,9 +92,8 @@ class Token{
     $query = new ParseQuery("Token");
     $query->equalTo("team_id", $team_id);
     $query->equalTo("user", $user_nick);
-    $result = $query->find();
-    if(count($result)){
-      $token_obj = $result[0];
+    $token_obj = $query->first();
+    if($token_obj){
       $token_obj->token = $token;
       $token_obj->save();
     }
