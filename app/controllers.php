@@ -60,9 +60,18 @@ class CallbackController extends Controller{
     $response = file_get_contents("https://slack.com/api/oauth.access?$qs");
     $json = json_decode($response);
     if($json->ok == 'true'){
+      // Convert the code to an access token
       $slack = new ConnorVG\Slack\Slack($json->access_token);
       $response = $slack->prepare('auth.test')->send();
-      Team::create($response->team, $response->team_id);
+
+      // Store the access token and team
+      Token::update_or_add($response->team_id, $json->access_token, $response->user);
+      Team::find_or_create($response->team, $response->team_id);
+
+      // Store the team's member list
+      $userlist = $slack->prepare('users.list')->send();
+      User::add($userlist->members);
+      $this->redirect($config['BASE_URI']);
     }
     else{
       throw new Exception("Error in oauth");
