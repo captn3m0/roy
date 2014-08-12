@@ -7,10 +7,10 @@ require 'app/views.php';
 
 $routes = array(
     '/' => 'IndexController',
+    '/item' => 'ItemController',
     '/{a}' => 'TeamController',
     '/{a}/calendar' => 'TeamCalendarController',
-    '/{a}/settings' => 'SettingsController',
-    '/item' => 'ItemController'
+    '/{a}/settings' => 'SettingsController'
 );
 
 Link::all($routes);
