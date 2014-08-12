@@ -19,3 +19,21 @@ class Item{
     return $query->find();
   }
 }
+
+class Team{
+  static function create($name, $id){
+    $parse_obj = ParseObject::create("Team");
+    $parse_obj->name = $name;
+    $parse_obj->id = $id;
+    $parse_obj->save();
+  }
+}
+
+class User{
+  static function create($nick, $id){
+    $parse_obj = ParseObject::create("User");
+    $parse_obj->nick = $nick;
+    $parse_obj->id = $id;
+    $parse_obj->save();
+  }
+}

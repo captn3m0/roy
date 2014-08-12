@@ -4,20 +4,65 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f9af018834df9ce2dc6e5f048260cc94",
+    "hash": "dfaaaaa03bd2d33bd5f8857ad393adea",
     "packages": [
+        {
+            "name": "connorvg/php-slack",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ConnorVG/PHP-Slack.git",
+                "reference": "1a405243517288fe0b1d7318c47e89f6ab6dc09a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ConnorVG/PHP-Slack/zipball/1a405243517288fe0b1d7318c47e89f6ab6dc09a",
+                "reference": "1a405243517288fe0b1d7318c47e89f6ab6dc09a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "suggest": {
+                "connorvg/laravel-permissions": "A Laravel permissions package that uses keys rather than roles",
+                "connorvg/laravel-wolframalpha": "A Laravel wrapper for the Wolfram|Alpha API",
+                "connorvg/php-wtf": "A PHP implementation of my WholeTextFunctions library"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ConnorVG\\Slack\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Connor Parks",
+                    "email": "connorvg@gmx.com"
+                }
+            ],
+            "description": "A PHP implementation for the Slack API w/ Laravel binds",
+            "keywords": [
+                "laravel",
+                "slack"
+            ],
+            "time": "2014-03-19 16:34:14"
+        },
         {
             "name": "link/link",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apsdehal/Link.git",
-                "reference": "1a0547c2ed9036298ba729264fc716c1b0a903c3"
+                "reference": "c7c5599c99d52e18f804a3c64c0447920cbaaad8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apsdehal/Link/zipball/1a0547c2ed9036298ba729264fc716c1b0a903c3",
-                "reference": "1a0547c2ed9036298ba729264fc716c1b0a903c3",
+                "url": "https://api.github.com/repos/apsdehal/Link/zipball/c7c5599c99d52e18f804a3c64c0447920cbaaad8",
+                "reference": "c7c5599c99d52e18f804a3c64c0447920cbaaad8",
                 "shasum": ""
             },
             "require": {
@@ -48,7 +93,7 @@
                 "php",
                 "router"
             ],
-            "time": "2014-06-20 20:51:34"
+            "time": "2014-08-12 11:31:56"
         },
         {
             "name": "parse/php-sdk",
@@ -208,7 +253,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "link/link": 20,
-        "symfony/yaml": 20
+        "symfony/yaml": 20,
+        "connorvg/php-slack": 20
     },
     "prefer-stable": false,
     "platform": [],

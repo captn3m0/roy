@@ -16,6 +16,7 @@
     "link/link" : "dev-master",
     "twig/twig": "1.*",
     "parse/php-sdk" : "1.0.*",
-    "symfony/yaml":"dev-master"
+    "symfony/yaml":"dev-master",
+    "connorvg/php-slack": "dev-master"
   }
 }

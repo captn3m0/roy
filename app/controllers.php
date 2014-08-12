@@ -1,4 +1,5 @@
 <?php
+use ConnorVG\Slack;
 class Controller {
   function render($template, $data = []){
     global $twig;
@@ -59,7 +60,9 @@ class CallbackController extends Controller{
     $response = file_get_contents("https://slack.com/api/oauth.access?$qs");
     $json = json_decode($response);
     if($json->ok == 'true'){
-      
+      $slack = new ConnorVG\Slack\Slack($json->access_token);
+      $response = $slack->prepare('auth.test')->send();
+      Team::create($response->team, $response->team_id);
     }
     else{
       throw new Exception("Error in oauth");
