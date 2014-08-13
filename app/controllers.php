@@ -85,8 +85,17 @@ class TeamController extends Controller{
 
 class ItemController extends Controller{
   function post(){
+    $messages = [
+      "aye aye, captain!",
+      "your wish, my command",
+      "roy, at your service!",
+      "roy likes this",
+      "Arrow approves of this",
+      "I have a plan",
+      "I am groot"
+    ];
     $item = Item::create($_POST);
-    echo $this->slack("Noted down in Roy");
+    echo $this->slack($messages[array_rand($messages)]);
   }
 }
 
