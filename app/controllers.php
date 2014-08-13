@@ -60,6 +60,8 @@ class TeamController extends Controller{
             }
           }, $item->text);
 
+          $item->text = str_replace("<!channel>", "@channel", $item->text);
+
         }
         echo $this->render('team.twig', ['items'=>$items]);
       }
