@@ -51,7 +51,7 @@ $(window).load(function(){
   $('article li').each(function(i, item){
     var $item = $(item);
     $item.tooltipster({
-      content: $('<span><a href="#/done/">done</a></span>'),
+      content: $('<span><a href="#/done/'+$item.data('id')+'">done</a></span>'),
       position: "left"
     });
     $item.tooltipster({
@@ -74,3 +74,10 @@ routie('/user/:user', function(user){
   $('article li').hide();
   $('article li:contains('+user+')').show();
 })
+
+routie('/done/:id', function(id){
+  $.post('item/'+id, function(response){
+    $('article li[data-id="'+id+'"]').remove();
+    alert(response);
+  });
+});

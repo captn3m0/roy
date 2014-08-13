@@ -8,6 +8,7 @@ require 'app/views.php';
 $routes = array(
     '/' => 'IndexController',
     '/item' => 'ItemController',
+    '/item/{a}' => 'ItemDoneController',
     '/{a}' => 'TeamController',
     '/{a}/calendar' => 'TeamCalendarController',
     '/{a}/settings' => 'SettingsController',

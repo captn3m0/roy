@@ -34,7 +34,7 @@ class TeamController extends Controller{
       if($team){
         $users = Team::get_users($team->team_id);
         $channels = Team::get_channels($team->team_id);
-        $items = Item::get($team->team_id);
+        $items = Team::get_items($team->team_id);
 
         foreach($items as &$item){
           $item->text = preg_replace_callback("/(<@U\w*>)/i", function($matches) use ($users){
@@ -79,7 +79,6 @@ class TeamController extends Controller{
       else{
         $this->redirect("oauth");
       }
-      
     }
   }
 }
@@ -172,5 +171,12 @@ class UpdateChannelsController extends Controller{
     else{
       throw new Exception("No such team");
     }
+  }
+}
+
+class ItemDoneController extends Controller{
+  function post($item_id){
+    Item::done($item_id);
+    echo "Item was marked as done";
   }
 }

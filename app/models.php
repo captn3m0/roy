@@ -13,10 +13,15 @@ class Item{
     $parse_obj->save();
     return $parse_obj->objectId;
   }
-  static function get($team){
+  static function get($id){
     $query = new ParseQuery("Item");
-    $query->equalTo("team_id", $team);
-    return $query->find();
+    return $query->get($id);
+  }
+
+  static function done($id){
+    $item = self::get($id);
+    $item->done = true;
+    $item->save();
   }
 }
 
@@ -69,6 +74,12 @@ class Team{
     foreach($result as $channel)
       $arr[$channel->channel_id] = $channel->name;
     return $arr;
+  }
+  static function get_items($team){
+    $query = new ParseQuery("Item");
+    $query->equalTo("team_id", $team);
+    $query->notEqualTo("done", true);
+    return $query->find();
   }
 }
 
