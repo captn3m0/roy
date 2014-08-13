@@ -4,6 +4,8 @@ class Controller {
   function render($template, $data = []){
     global $twig;
     $data['BASE_URI'] = $this->config('BASE_URI');
+    if(isset($_SESSION['team']))
+      $data['team'] = $_SESSION['team'];
     return $twig->render($template, $data);
   }
   function json($data){

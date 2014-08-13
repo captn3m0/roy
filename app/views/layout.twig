@@ -14,6 +14,18 @@
   {% endblock %}
 </head>
 <body>
+  {% block header %}
+  <h1><a href="#">Roy</a> <small>Task management for slack</small></h1>
+  <nav class="links">
+    <a href="{{BASE_URI}}{{team}}/calendar">calendar</a>
+    <a href="{{BASE_URI}}{{team}}">team</a>
+    <a href="{{BASE_URI}}{{team}}/settings">settings</a>
+  </nav>
+  <nav class="hashtags">
+  </nav>
+  <nav class="mentions">
+  </nav>
+  {% endblock %}
   {% block body %}
   {% endblock %}
   <footer>
