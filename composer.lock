@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "dfaaaaa03bd2d33bd5f8857ad393adea",
+    "hash": "5ab6284dbba187683370bd2167fb638b",
     "packages": [
         {
             "name": "connorvg/php-slack",
@@ -257,6 +257,8 @@
         "connorvg/php-slack": 20
     },
     "prefer-stable": false,
-    "platform": [],
+    "platform": {
+        "php": "~5.5.15"
+    },
     "platform-dev": []
 }
