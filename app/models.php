@@ -30,6 +30,17 @@ class Item{
     $item->done = true;
     $item->save();
   }
+
+  static function group_by_date($items){
+    $result = [];
+    foreach($items as $item){
+      $date = date('jS F (l)', $item->timestamp);
+      if(!isset($result[$date]))
+        $result[$date] = [];
+      array_push($result[$date], $item);
+    }
+    return $result;
+  }
 }
 
 class Team{
@@ -82,10 +93,12 @@ class Team{
       $arr[$channel->channel_id] = $channel->name;
     return $arr;
   }
-  static function get_items($team){
+  static function get_items($team, $get_only_unfinished=true){
     $query = new ParseQuery("Item");
     $query->equalTo("team_id", $team->team_id);
-    $query->notEqualTo("done", true);
+    if($get_only_unfinished === true)
+      $query->EqualTo("done", false);
+    $query->descending("createdAt");
     $items = $query->find();
 
     $users = self::get_users($team->team_id);

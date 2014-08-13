@@ -3,6 +3,7 @@ use ConnorVG\Slack;
 class Controller {
   function render($template, $data = []){
     global $twig;
+    $data['BASE_URI'] = $this->config('BASE_URI');
     return $twig->render($template, $data);
   }
   function json($data){
@@ -155,7 +156,10 @@ class ItemDoneController extends Controller{
 }
 
 class CalendarController extends Controller{
-  function get($team){
-
+  function get($team_name){
+    $team = $this->check_auth_for_team($team_name);
+    $items = Item::group_by_date(Team::get_items($team, false));
+    //var_dump($items);
+    echo $this->render('calendar.twig', ['items'=>$items]);
   }
 }

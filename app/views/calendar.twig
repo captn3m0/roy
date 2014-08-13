@@ -1,0 +1,35 @@
+{% extends "layout.twig" %}
+{% block title %}SDSLabs{% endblock %}
+{% block scripts %}
+{{ parent() }}
+<script src="{{ BASE_URI }}assets/js/routie.min.js"></script>
+<script src="{{ BASE_URI }}assets/js/jquery.tooltipster.min.js"></script>
+{% endblock %}
+{% block css %}
+{{ parent() }}  
+<link href="{{ BASE_URI }}assets/css/tooltipster.css" rel="stylesheet">
+{% endblock %}
+{% block body %}
+  <h1><a href="#">Roy</a> <small>Task management for slack</small></h1>
+  <nav class="hashtags">
+  </nav>
+  <nav class="mentions">
+  </nav>
+  <article>
+    {% for date,list in items %}
+    <h2>{{ date }}</h2>
+    <ul>
+      {% for item in list %}
+      <li data-done="{{ item.get('done') }}" data-id="{{ item.getObjectId() }}" data-created="{{ item.get('timestamp')|round|date }}" data-channel="{{ item.get('channel_name') }}" data-creator="@{{ item.get('user_name') }}">
+        {% if item.get('done') %}
+        <strike data-closed="{{ item.getUpdatedAt().format('F j, Y H:i') }}">{{ item.get('text') }} - #{{ item.get('channel_name') }}</strike>
+        {% else %}
+        {{ item.get('text') }} - #{{ item.get('channel_name') }}
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% endfor %}
+  </article>
+  <script src="{{ BASE_URI }}assets/js/script.js"></script>
+{% endblock %}
