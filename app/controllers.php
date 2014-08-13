@@ -61,8 +61,15 @@ class ItemController extends Controller{
       echo $this->slack("Invalid incoming webhook");
     }
     else{
-      Item::create($packet);
-      echo $this->slack($messages[array_rand($messages)]);
+      switch(strtolower(trim($packet->text))){
+        case 'link':
+          $team = Team::get($packet->team_id);
+          echo $this->slack($this->config('BASE_URI').$team->name);
+          break;
+        default:
+          Item::create($packet);
+          echo $this->slack($messages[array_rand($messages)]);
+      }
     }
   }
 }
