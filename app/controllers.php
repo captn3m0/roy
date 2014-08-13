@@ -16,6 +16,7 @@ class Controller {
   }
   function redirect($link){
     if(substr($link,0,4) !== 'http'){
+      // HTTP 1.1 RFC statas that Location headers must always be absolute links
       $link = $this->config('BASE_URI').$link;
     }
     header("Location: $link");
@@ -29,10 +30,24 @@ class Controller {
 class TeamController extends Controller{
   function get($team){
     if($_SESSION['team'] == $team){
-      $items = Item::get($team);
       $team = $team = Team::find($team);
       if($team){
-        //$users = User::
+        $users = Team::get_users($team->team_id);
+        $items = Item::get($team->team_id);
+        
+        foreach($items as &$item){
+          $item->text = preg_replace_callback("/(<@U\w*>)/i", function($matches) use ($users){
+            // We start from $matches[1]
+            for($i=1;$i<count($matches);$i++){
+              // Replace all user ids with user names
+              $user_id = substr($matches[$i],2,-1);
+              if(isset($users[$user_id]))
+                return "@".$users[$user_id];
+              else
+                return "@".$user_id;
+            }
+          }, $item->text);
+        }
         echo $this->render('team.twig', ['items'=>$items]);
       }
       else{

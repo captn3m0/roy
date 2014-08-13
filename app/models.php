@@ -15,7 +15,7 @@ class Item{
   }
   static function get($team){
     $query = new ParseQuery("Item");
-    $query->equalTo("team_domain", $team);
+    $query->equalTo("team_id", $team);
     return $query->find();
   }
 }
@@ -50,6 +50,16 @@ class Team{
     $query = new ParseQuery("Token");
     $query->equalTo("team_id", $team_id);
     return $query->first()->token;
+  }
+
+  static function get_users($team_id){
+    $query = new ParseQuery("User");
+    $query->equalTo("team", $team_id);
+    $result = $query->find();
+    $arr = [];
+    foreach($result as $user)
+      $arr[$user->user_id] = $user->nick;
+    return $arr;
   }
 }
 
