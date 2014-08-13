@@ -88,8 +88,6 @@ class ItemController extends Controller{
     $messages = [
       "aye aye, captain!",
       "your wish, my command",
-      "roy, at your service!",
-      "roy likes this",
       "Arrow approves of this",
       "I have a plan",
       "I am groot"
