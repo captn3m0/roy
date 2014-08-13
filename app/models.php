@@ -61,6 +61,15 @@ class Team{
       $arr[$user->user_id] = $user->nick;
     return $arr;
   }
+  static function get_channels($team_id){
+    $query = new ParseQuery("Channel");
+    $query->equalTo("team", $team_id);
+    $result = $query->find();
+    $arr = [];
+    foreach($result as $channel)
+      $arr[$channel->channel_id] = $channel->name;
+    return $arr;
+  }
 }
 
 class User{
@@ -110,5 +119,27 @@ class Token{
     else{
       self::add($team_id, $token, $user_nick);
     }
+  }
+}
+
+class Channel{
+  static function add($list, $team_id){
+    foreach($list as $channel){
+      $channel_in_db = self::get($channel->id);
+      if(!$channel_in_db)
+        self::create($channel->name, $channel->id, $team_id);
+    }
+  }
+  static function get($id){
+    $query = new ParseQuery("Channel");
+    $query->equalTo("channel_id", $id);
+    return $query->first();
+  }
+  static function create($name, $id, $team){
+    $parse_obj = ParseObject::create("Channel");
+    $parse_obj->name = $name;
+    $parse_obj->channel_id = $id;
+    $parse_obj->team = $team;
+    $parse_obj->save();
   }
 }

@@ -33,8 +33,9 @@ class TeamController extends Controller{
       $team = $team = Team::find($team);
       if($team){
         $users = Team::get_users($team->team_id);
+        $channels = Team::get_channels($team->team_id);
         $items = Item::get($team->team_id);
-        
+
         foreach($items as &$item){
           $item->text = preg_replace_callback("/(<@U\w*>)/i", function($matches) use ($users){
             // We start from $matches[1]
@@ -47,6 +48,18 @@ class TeamController extends Controller{
                 return "@".$user_id;
             }
           }, $item->text);
+
+          $item->text = preg_replace_callback("/(<#C\w*>)/i", function($matches) use ($channels){
+            for($i=1;$i<count($matches);$i++){
+              // Replace all channel id with channel names
+              $channel_id = substr($matches[$i],2,-1);
+              if(isset($channels[$channel_id]))
+                return "#".$channels[$channel_id];
+              else
+                return "#".$channel_id;
+            }
+          }, $item->text);
+
         }
         echo $this->render('team.twig', ['items'=>$items]);
       }
@@ -130,7 +143,6 @@ class SessionController extends Controller{
 class UpdateUsersController extends Controller{
   // Expects team name
   function get($team){
-    $items = Item::get($team);
     $team = $team = Team::find($team);
     if($team){
       $token = Team::get_token($team->team_id);
@@ -138,6 +150,22 @@ class UpdateUsersController extends Controller{
       $userlist = $slack->prepare('users.list')->send();
       User::add($userlist->members, $team->team_id);
       echo "User list updated";
+    }
+    else{
+      throw new Exception("No such team");
+    }
+  }
+}
+
+class UpdateChannelsController extends Controller{
+  function get($team){
+    $team = $team = Team::find($team);
+    if($team){
+      $token = Team::get_token($team->team_id);
+      $slack = new ConnorVG\Slack\Slack($token);
+      $list = $slack->prepare('channels.list')->set(['exclude_archived'=>1])->send();
+      Channel::add($list->channels, $team->team_id);
+      echo "Channel list updated";
     }
     else{
       throw new Exception("No such team");

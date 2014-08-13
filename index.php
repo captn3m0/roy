@@ -12,6 +12,7 @@ $routes = array(
     '/{a}/calendar' => 'TeamCalendarController',
     '/{a}/settings' => 'SettingsController',
     '/{a}/users/update' => 'UpdateUsersController',
+    '/{a}/channels/update' => 'UpdateChannelsController',
     '/oauth' => 'OAuthController',
     '/oauth/callback' => 'CallbackController',
     '/session' => 'SessionController'
