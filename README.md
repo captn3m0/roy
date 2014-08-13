@@ -3,10 +3,10 @@
 Roy is a todo application for Slack users.
 
 ##Features
-1. Create an item from slack chat.
-2. See all items on the web application.
+1. Create an item from slack chat. ✓
+2. See all items on the web application.✓
 3. Filter & sort items by mentions/hashtags or creation dates
-4. Mark items as done.
+4. Mark items as done. ✓
 5. See a calendar of all items, and when they were closed.
 6. Receive daily emails about what all todo items were created or closed today.
 
