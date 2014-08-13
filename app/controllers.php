@@ -66,7 +66,7 @@ class TeamController extends Controller{
         echo $this->render('team.twig', ['items'=>$items]);
       }
       else{
-        throw new Exception("No such team");
+        throw new Exception("No such team: $team");
       }
     }
     else{
@@ -114,9 +114,10 @@ class OAuthController extends Controller{
 class CallbackController extends Controller{
   function get(){
     $qs = http_build_query([
-      'client_id'=>$this->config('SLACK_ID'),
-      'client_secret'=>$this->config('SLACK_SECRET'),
-      'code'=>$_GET['code']
+      'client_id'=>     $this->config('SLACK_ID'),
+      'client_secret'=> $this->config('SLACK_SECRET'),
+      'code'=>          $_GET['code'],
+      'redirect_uri'=>  $this->config('BASE_URI').'oauth/callback'
     ]);
     $response = file_get_contents("https://slack.com/api/oauth.access?$qs");
     $json = json_decode($response);
@@ -137,7 +138,7 @@ class CallbackController extends Controller{
       $this->redirect($team_name);
     }
     else{
-      throw new Exception("Error in oauth");
+      throw new Exception("Error in oauth: {$json->ok}");
     }
   }
 }
@@ -160,7 +161,7 @@ class UpdateUsersController extends Controller{
       echo "User list updated";
     }
     else{
-      throw new Exception("No such team");
+      throw new Exception("No such team: $team");
     }
   }
 }
@@ -176,7 +177,7 @@ class UpdateChannelsController extends Controller{
       echo "Channel list updated";
     }
     else{
-      throw new Exception("No such team");
+      throw new Exception("No such team $team");
     }
   }
 }
