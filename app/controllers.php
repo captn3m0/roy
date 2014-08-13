@@ -92,8 +92,14 @@ class ItemController extends Controller{
       "I have a plan",
       "I am groot"
     ];
-    $item = Item::create($_POST);
-    echo $this->slack($messages[array_rand($messages)]);
+    $packet = new ConnorVG\Slack\SlackIncoming($_POST);
+    if($packet->hasError()){
+      echo $this->slack("Invalid incoming webhook");
+    }
+    else{
+      Item::create($packet);
+      echo $this->slack($messages[array_rand($messages)]);
+    }
   }
 }
 

@@ -7,11 +7,18 @@ ParseClient::initialize($config['PARSE_APP_ID'], $config['PARSE_API_KEY'], $conf
 class Item{
   static function create($data){
     $parse_obj = ParseObject::create("Item");
-    foreach($data as $key=>$obj){
-      $parse_obj->$key = $obj;
-    }
+    $parse_obj->token = $data->token;
+    $parse_obj->team_id = $data->team_id;
+    $parse_obj->channel_id = $data->channel_id;
+    $parse_obj->channel_name = $data->channel_name;
+    $parse_obj->timestamp = $data->timestamp;
+    $parse_obj->user_id = $data->user_id;
+    $parse_obj->user_name = $data->user_name;
+    $parse_obj->text = $data->text;
+    $parse_obj->trigger_word = $data->trigger_word;
+    $parse_obj->done = false;
     $parse_obj->save();
-    return $parse_obj->objectId;
+    return $parse_obj->getObjectId();
   }
   static function get($id){
     $query = new ParseQuery("Item");
