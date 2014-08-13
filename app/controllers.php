@@ -101,10 +101,9 @@ class ItemController extends Controller{
 
 class OAuthController extends Controller{
   function get(){
-    global $config;
     $qs = http_build_query([
       'client_id' => $this->config('SLACK_ID'),
-      'redirect_uri'=>$config['BASE_URI'].'oauth/callback',
+      'redirect_uri'=>$this->config('BASE_URI').'oauth/callback',
       'scope'=>'identify,read',
       'team'=>$_GET['team']
     ]);
@@ -114,7 +113,6 @@ class OAuthController extends Controller{
 
 class CallbackController extends Controller{
   function get(){
-    global $config;
     $qs = http_build_query([
       'client_id'=>$this->config('SLACK_ID'),
       'client_secret'=>$this->config('SLACK_SECRET'),
