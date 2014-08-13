@@ -26,60 +26,21 @@ class Controller {
     global $config;
     return $config[$setting];
   }
+  function check_auth_for_team($team_name){
+    $team = Team::find($team_name);
+    if(!$team)
+      die("No such team.");
+    elseif($_SESSION['team'] === $team->name)
+      return $team;
+    else
+      $this->redirect("oauth?team={$team->name}");
+  }
 }
 class TeamController extends Controller{
-  function get($team){
-    if($_SESSION['team'] == $team){
-      $team = $team = Team::find($team);
-      if($team){
-        $users = Team::get_users($team->team_id);
-        $channels = Team::get_channels($team->team_id);
-        $items = Team::get_items($team->team_id);
-
-        foreach($items as &$item){
-          $item->text = preg_replace_callback("/(<@U\w*>)/i", function($matches) use ($users){
-            // We start from $matches[1]
-            for($i=1;$i<count($matches);$i++){
-              // Replace all user ids with user names
-              $user_id = substr($matches[$i],2,-1);
-              if(isset($users[$user_id]))
-                return "@".$users[$user_id];
-              else
-                return "@".$user_id;
-            }
-          }, $item->text);
-
-          $item->text = preg_replace_callback("/(<#C\w*>)/i", function($matches) use ($channels){
-            for($i=1;$i<count($matches);$i++){
-              // Replace all channel id with channel names
-              $channel_id = substr($matches[$i],2,-1);
-              if(isset($channels[$channel_id]))
-                return "#".$channels[$channel_id];
-              else
-                return "#".$channel_id;
-            }
-          }, $item->text);
-
-          $item->text = str_replace("<!channel>", "@channel", $item->text);
-
-        }
-        echo $this->render('team.twig', ['items'=>$items]);
-      }
-      else{
-        throw new Exception("No such team: $team");
-      }
-    }
-    else{
-      // We redirect to the oauth page
-      // Get the team's slack id, if available
-      $team = Team::find($team);
-      if($team){
-        $this->redirect("oauth?team={$team->team_id}");
-      }
-      else{
-        $this->redirect("oauth");
-      }
-    }
+  function get($team_name){
+    $team = $this->check_auth_for_team($team_name);
+    $items = Team::get_items($team);
+    echo $this->render('team.twig', ['items'=>$items]);
   }
 }
 
@@ -190,5 +151,11 @@ class ItemDoneController extends Controller{
   function post($item_id){
     Item::done($item_id);
     echo "Item was marked as done";
+  }
+}
+
+class CalendarController extends Controller{
+  function get($team){
+
   }
 }

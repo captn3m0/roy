@@ -84,9 +84,40 @@ class Team{
   }
   static function get_items($team){
     $query = new ParseQuery("Item");
-    $query->equalTo("team_id", $team);
+    $query->equalTo("team_id", $team->team_id);
     $query->notEqualTo("done", true);
-    return $query->find();
+    $items = $query->find();
+
+    $users = self::get_users($team->team_id);
+    $channels = self::get_channels($team->team_id);
+
+    foreach($items as &$item){
+      $item->text = preg_replace_callback("/(<@U\w*>)/i", function($matches) use ($users){
+        // We start from $matches[1]
+        for($i=1;$i<count($matches);$i++){
+          // Replace all user ids with user names
+          $user_id = substr($matches[$i],2,-1);
+          if(isset($users[$user_id]))
+            return "@".$users[$user_id];
+          else
+            return "@".$user_id;
+        }
+      }, $item->text);
+
+      $item->text = preg_replace_callback("/(<#C\w*>)/i", function($matches) use ($channels){
+        for($i=1;$i<count($matches);$i++){
+          // Replace all channel id with channel names
+          $channel_id = substr($matches[$i],2,-1);
+          if(isset($channels[$channel_id]))
+            return "#".$channels[$channel_id];
+          else
+            return "#".$channel_id;
+        }
+      }, $item->text);
+
+      $item->text = str_replace("<!channel>", "@channel", $item->text);
+    }
+    return $items;
   }
 }
 
