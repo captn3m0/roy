@@ -1,0 +1,21 @@
+{% extends "layout.twig" %}
+{% block title %}SDSLabs{% endblock %}
+{% block scripts %}
+{{ parent() }}
+<script src="assets/js/routie.min.js"></script>
+<script src="assets/js/jquery.tooltipster.min.js"></script>
+{% endblock %}
+{% block css %}
+{{ parent() }}  
+<link href="assets/css/tooltipster.css" rel="stylesheet">
+{% endblock %}
+{% block body %}
+  <article>
+    <ul>
+      {% for item in items %}
+      <li data-id="{{ item.getObjectId() }}" data-created="{{ item.get('timestamp')|round|date }}" data-channel="{{ item.get('channel_name') }}" data-creator="@{{ item.get('user_name') }}">{{ item.get('text') }} - #{{ item.get('channel_name') }}</li>
+      {% endfor %}
+    </ul>
+  </article>
+  <script src="assets/js/script.js"></script>
+{% endblock %}
