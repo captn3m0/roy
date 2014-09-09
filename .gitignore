@@ -16,3 +16,7 @@
 /tmp
 vendor/
 .env
+
+# Rails documentation
+/public/rails
+/doc/
