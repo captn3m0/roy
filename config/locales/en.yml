@@ -20,4 +20,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  item_create_response:
+    - aye aye, captain!
+    - your wish, my command
+    - Arrow approves of this
+    - I have a plan
+    - I am groot
