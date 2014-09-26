@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140909164712) do
+ActiveRecord::Schema.define(version: 20140926121447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20140909164712) do
     t.string   "identifier"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "team_id"
   end
 
   create_table "items", force: true do |t|
@@ -50,6 +51,7 @@ ActiveRecord::Schema.define(version: 20140909164712) do
     t.string   "identifier"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "team_id"
   end
 
   add_foreign_key "items", "channels"

@@ -11,10 +11,12 @@ class Item < ActiveRecord::Base
 
     channel = Channel.find_or_create_by(identifier: params[:channel_id]) do |c|
       c.name = params[:channel_name]
+      c.team = team
     end
 
     user = User.find_or_create_by(identifier: params[:user_id]) do |u|
       u.name = params[:user_name]
+      u.team = team
     end
 
     text = params[:text].slice(params[:trigger_word].length..-1).lstrip
