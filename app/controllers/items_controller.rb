@@ -1,3 +1,4 @@
+require 'pp'
 class ItemsController < ApplicationController
 
   # We'll instead use the auth token that slack provides
@@ -7,7 +8,12 @@ class ItemsController < ApplicationController
   # from the slack webhook
   def create
     item = Item.create_from_webhook params
-    message = I18n.t('item_create_response').sample
+    if item.nil?
+      message = "Please login to Roy first to create a team."  
+    else
+      message = I18n.t('item_create_response').sample
+    end
+
     render_slack message
   end
 

@@ -5,10 +5,11 @@ class Item < ActiveRecord::Base
   def self.create_from_webhook(params)
     
     # Get the corresponding team
-    team = Team.find_or_create_by(identifier: params[:team_id]) do |t|
-      t.name = params[:team_domain]
-    end
-
+    team = Team.find_by_identifier(params[:team_id])
+    return nil if team.nil?
+    token = team.token
+    # Use this token to pre-fill channel and user list
+=begin
     channel = Channel.find_or_create_by(identifier: params[:channel_id]) do |c|
       c.name = params[:channel_name]
       c.team = team
@@ -18,6 +19,8 @@ class Item < ActiveRecord::Base
       u.name = params[:user_name]
       u.team = team
     end
+=end
+
 
     text = params[:text].slice(params[:trigger_word].length..-1).lstrip
 

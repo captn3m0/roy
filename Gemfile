@@ -31,6 +31,7 @@ gem 'spring',        group: :development
 
 gem 'high_voltage', '~> 2.2.1'
 
+gem 'slack-api'
 gem 'omniauth-slack'
 
 # Use ActiveModel has_secure_password
