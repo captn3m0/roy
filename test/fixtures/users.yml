@@ -3,3 +3,8 @@ default:
   name: roy
   identifier: U6D78DSAD
   token: Invalid Token
+first:
+  identifier: U02G4EZPX
+  name: user1
+  team: default
+  token: Invalid Token

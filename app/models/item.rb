@@ -23,10 +23,6 @@ class Item < ActiveRecord::Base
     channel_identifiers = SlackUtil.get_channels(text)
     user_identifiers =    SlackUtil.get_users(text)
 
-    # This is what we have in the database
-    channels = Channel.find_by_team_id(team.id).index_by(&:identifier)
-    users = User.find_by_team_id(team.id).index_by(&:identifier)
-
     item = Item.create({
       :team => team,
       :channel => channel,
