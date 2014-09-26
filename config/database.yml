@@ -1,10 +1,10 @@
 default: &default
-  adapter: postgresql
+  adapter: mysql
   pool: 5
   timeout: 5000
   username: <%= ENV['DB_USER'] %>
   password: <%= ENV['DB_PWD'] %>
-  encoding: unicode
+  encoding: utf8
   database: roy
 
 development:

@@ -6,7 +6,7 @@ gem 'dotenv-rails', :groups => [:development, :test]
 gem 'rails', '4.2.0.beta1'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', group: :test
-gem 'pg'
+gem 'mysql'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.0.beta1'
