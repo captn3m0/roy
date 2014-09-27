@@ -6,11 +6,13 @@ class ItemsController < ApplicationController
   # This is creation of an item
   # from the slack webhook
   def create
-    render_slack params[:text]
-    return
+    # This is to make amon ignore its own sayings
+    return if params[:user_id].eql?("USLACKBOT")
+
+    # Try to create a new item
     item = Item.create_from_webhook params
     if item.nil?
-      message = "Please login to Roy first to create a team."  
+      message = I18n.t(:no_such_team, :url=>"#{request.env['HTTP_HOST']}/auth/slack")
     else
       message = I18n.t('item_create_response').sample
     end
@@ -18,7 +20,12 @@ class ItemsController < ApplicationController
   end
 
   def index
-    items = Item.all
+    raise "No team specified" if params[:team].nil?
+    team = Team.find_by(name: params[:team])
+    if team.nil?
+      render plain: I18n.t('no_such_team', :url=>"#{request.env['HTTP_HOST']}/auth/slack") and return
+    end
+    items = Item.select('items.*, users.name as user_name, channels.name as channel_name').joins(:user).joins(:channel).where(team: team)
     render json: items
   end
 end

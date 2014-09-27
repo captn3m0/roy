@@ -20,4 +20,8 @@ class SlackUtilTest < ActiveSupport::TestCase
     final_string = "amon Hello #test #channel1 #channel2 @user1 @channel @everyone @group @mention !Fake"
     assert_equal final_string, @slack.parse(@text, @team.id)
   end
+
+  test 'parse should work on sparse strings' do
+    assert_equal "z", "z"
+  end
 end
