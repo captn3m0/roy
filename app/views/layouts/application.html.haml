@@ -1,0 +1,26 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}
+      %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+        %title
+          = content_for :title
+          - Roy
+        = stylesheet_link_tag    'application'
+        = javascript_include_tag 'application'
+        = csrf_meta_tags
+  %body 
+    = content_for :header
+    %h1
+      %a{:href => "#"} Roy
+      %small Task management for slack
+    %nav.links
+      %a{:href => "/#{@team.name}/calendar"} calendar
+      %a{:href => "/#{@team.name}"} team
+      %a{:href => "/#{@team.name}/settings"} settings
+    %nav.hashtags
+    %nav.mentions
+    = yield
+    %footer
+      Roy is open source software for Slack users.
+      %a{:href => "https://github.com/captn3m0/roy"} [Source Code]

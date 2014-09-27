@@ -21,11 +21,11 @@ class ItemsController < ApplicationController
 
   def index
     raise "No team specified" if params[:team].nil?
-    team = Team.find_by(name: params[:team])
-    if team.nil?
+    @team = Team.find_by(name: params[:team])
+    if @team.nil?
       render plain: I18n.t('no_such_team', :url=>"#{request.env['HTTP_HOST']}/auth/slack") and return
     end
-    items = Item.select('items.*, users.name as user_name, channels.name as channel_name').joins(:user).joins(:channel).where(team: team)
-    render json: items
+    @items = Item.select('items.*, users.name as user_name, channels.name as channel_name').joins(:user).joins(:channel).where(team: @team)
+    render 'team'
   end
 end
