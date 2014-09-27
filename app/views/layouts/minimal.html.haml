@@ -1,0 +1,12 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+    = stylesheet_link_tag 'http://fonts.googleapis.com/css?family=PT+Sans'
+    %title Roy
+    = stylesheet_link_tag 'landing'
+  %body
+    #wrapper
+      = yield
+    = javascript_include_tag 'landing'
