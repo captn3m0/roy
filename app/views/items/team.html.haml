@@ -3,5 +3,5 @@
     - for item in @items
       %li{"data-channel"=>item.channel_name, "data-created"=>item.created_at, "data-channel"=>item.channel_name, "data-creator"=>"@#{item.user_name}", "data-id"=>item.id}
         = item.text
-        " - "
-        = item.channel_name
+        \-
+        = "##{item.channel_name}"
