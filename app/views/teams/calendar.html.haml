@@ -4,13 +4,13 @@
       = date
     %ul
       - for item in items
-        %li{"data-channel"=>item.channel_name, "data-created"=>item.created_at, "data-channel"=>item.channel_name, "data-creator"=>"@#{item.user_name}", "data-id"=>item.id}
+        %li{"data-channel"=>item.channel_name, "data-created"=>time_ago_in_words(item.created_at)+" ago", "data-channel"=>item.channel_name, "data-creator"=>"@#{item.user_name}", "data-id"=>item.id}
           %span.list-head
             ●
           - if item.created_at == item.updated_at
             = item.text
           - else
-            %strike
+            %strike{"data-closed"=>time_ago_in_words(item.updated_at)+" ago"}
               = item.text
           %span.channel
             = "##{item.channel_name}"

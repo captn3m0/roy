@@ -47,9 +47,16 @@ $(document).ready(function(){
   listMentions(mentions);
   $('body').on('click','.done', function(e){
     $el = $(this);
-    $.post('item/'+$el.data('id'), function(response){
-      $('article li[data-id="'+$el.data('id')+'"]').remove();
-      alert(response);
+    $.ajax({
+        type: "PUT",
+        url: 'items/'+$el.data('id'),
+        success: function (response) {
+          $('article li[data-id="'+$el.data('id')+'"]').remove();
+          alert(response);
+        },
+        error: function (err){
+          alert('Error');
+        }
     });
   });
   $('.picker select').on('change', function() {
@@ -60,18 +67,16 @@ $(document).ready(function(){
 $(window).load(function(){
   $('article li').each(function(i, item){
     var $item = $(item);
-    if($item.data('done')!=1){
-      $item.tooltipster({
-        content: $('<span><a class="done" data-id="'+$item.data('id')+'">done</a></span>'),
-        position: "left"
-      });
-    }
+    $item.tooltipster({
+      content: $('<span><a class="done" data-id="'+$item.data('id')+'">done</a></span>'),
+      position: "left"
+    });
     var closed = "";
     if($item.find("strike").length>0){
-      closed = "<br>Closed on: "+$item.find('strike').data('closed');
+      closed = "<br>Closed: "+$item.find('strike').data('closed');
     }
     $item.tooltipster({
-      content: $('<span>Created on: '+$item.data('created')+'. <br> Channel: '+$item.data('channel')+' <br> Creator: '+$item.data('creator')+closed+'</span>'),
+      content: $('<span>Created: '+$item.data('created')+'. <br> Channel: '+$item.data('channel')+' <br> Creator: '+$item.data('creator')+closed+'</span>'),
       position: "top"
     });
   });

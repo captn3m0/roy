@@ -18,4 +18,12 @@ class ItemsController < ApplicationController
     end
     render_slack message
   end  
+
+  # The only way to update an item is to mark it as done
+  def update
+    # TODO - Check if user has permissions to do this
+    item = Item.find params[:id]
+    item.touch
+    render plain: "The item was marked as done"
+  end
 end
