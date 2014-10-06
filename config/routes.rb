@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   resources :items
   # Oauth callback to add a new user in DB
   get '/auth/slack/callback', to: 'sessions#create'
+  
+  get '/:team/calendar', to: 'teams#calendar'
+
   # Show items of a team
-  get '/:team', to: 'items#index'
+  get '/:team', to: 'teams#index'
 end
