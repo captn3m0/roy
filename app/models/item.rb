@@ -34,4 +34,9 @@ class Item < ActiveRecord::Base
       :text => slack.parse(text, team.id)
     })
   end
+
+  # Returns whether item has been marked as done
+  def done
+    self.updated_at != self.created_at
+  end
 end

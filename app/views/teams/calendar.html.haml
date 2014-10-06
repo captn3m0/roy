@@ -4,8 +4,7 @@
       = date
     %ul
       - for item in items
-        - done = !(item.created_at === item.updated_at)
-        %li{"data-channel"=>item.channel_name, "data-created"=>time_ago_in_words(item.created_at)+" ago", "data-channel"=>item.channel_name, "data-creator"=>"@#{item.user_name}", "data-id"=>item.id, "data-done"=>done}
+        %li{"data-channel"=>item.channel_name, "data-created"=>time_ago_in_words(item.created_at)+" ago", "data-channel"=>item.channel_name, "data-creator"=>"@#{item.user_name}", "data-id"=>item.id, "data-done"=>item.done}
           %span.list-head
             ●
           - if item.created_at == item.updated_at

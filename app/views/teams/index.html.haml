@@ -1,10 +1,11 @@
 %article
   %ul
     - for item in @items
-      %li{"data-channel"=>item.channel_name, "data-created"=>time_ago_in_words(item.created_at)+" ago", "data-channel"=>item.channel_name, "data-creator"=>"@#{item.user_name}", "data-id"=>item.id}
-        %span.list-head
-          ●
-        = item.text
-        %span.channel
-          = "##{item.channel_name}"
+      - unless item.done
+        %li{"data-channel"=>item.channel_name, "data-created"=>time_ago_in_words(item.created_at)+" ago", "data-channel"=>item.channel_name, "data-creator"=>"@#{item.user_name}", "data-id"=>item.id}
+          %span.list-head
+            ●
+          = item.text
+          %span.channel
+            = "##{item.channel_name}"
 = render 'footer'
