@@ -7,13 +7,4 @@
         = item.text
         %span.channel
           = "##{item.channel_name}"
-- content_for :footer do
-  - if @team_names.size>1
-    Choose a team: 
-    %span.picker
-      %select
-        %option Select
-        - for team in @team_names
-          %option{"value"=>team}
-            = team
-    %br
+= render 'footer'
