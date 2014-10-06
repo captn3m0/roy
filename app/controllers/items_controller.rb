@@ -25,7 +25,7 @@ class ItemsController < ApplicationController
     if @team.nil?
       render plain: I18n.t('no_such_team', :url=>"#{request.env['HTTP_HOST']}/auth/slack") and return
     end
-    @items = Item.select('items.*, users.name as user_name, channels.name as channel_name').joins(:user).joins(:channel).where(team: @team)
+    @items = Item.select('items.*, users.name as user_name, channels.name as channel_name').joins(:user).joins(:channel).where(team: @team).order(timestamp: :desc)
     render 'team'
   end
 end
