@@ -52,6 +52,9 @@ $(document).ready(function(){
       alert(response);
     });
   });
+  $('.picker select').on('change', function() {
+    document.location = "/"+this.value;
+  });
 });
 
 $(window).load(function(){
@@ -75,15 +78,21 @@ $(window).load(function(){
 });
 
 routie('/all', function(){
+  $('nav a').removeClass('current');
   $('article li').show();
 });
 
 routie('/tag/:tag', function(tag) {
+  $('nav a').removeClass('current');
+  $('nav a[href="#/tag/'+tag+'"]').addClass('current');
   $('article li').hide();
   $('article li:icontains('+tag+')').show();
 });
 
 routie('/user/:user', function(user){
+  $('nav a').removeClass('current');
+  console.log('nav a[href="#/user/'+user+'"]')
+  $('nav a[href="#/user/'+user+'"]').addClass('current');
   $('article li').hide();
   $('article li:contains('+user+')').show();
 });

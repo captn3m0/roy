@@ -47,3 +47,7 @@ footer{
   -moz-user-select: none;
   -ms-user-select: none;
 }
+
+nav .current{
+  color: #34495e;
+}
