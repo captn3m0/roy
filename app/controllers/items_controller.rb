@@ -20,12 +20,18 @@ class ItemsController < ApplicationController
   end
 
   def index
+    session[:team] ||= []
     raise "No team specified" if params[:team].nil?
     @team = Team.find_by(name: params[:team])
     if @team.nil?
       render plain: I18n.t('no_such_team', :url=>"#{request.env['HTTP_HOST']}/auth/slack") and return
     end
-    @items = Item.select('items.*, users.name as user_name, channels.name as channel_name').joins(:user).joins(:channel).where(team: @team).order(timestamp: :desc)
-    render 'team'
+    @team_names =  session[:team].map{|h| h['name']}.uniq
+    if @team_names.include? @team.name
+      @items = Item.select('items.*, users.name as user_name, channels.name as channel_name').joins(:user).joins(:channel).where(team: @team).order(timestamp: :desc)
+      render 'team'
+    else
+      redirect_to "/auth/slack"
+    end
   end
 end

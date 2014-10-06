@@ -12,7 +12,7 @@
   %body
     = content_for :header
     %h1
-      %a{:href => "#"} Roy
+      %a{:href => "/ "} Roy
       %small Task management for slack
     %nav.links
       %a{:href => "/#{@team.name}/calendar"} calendar
@@ -22,5 +22,6 @@
     %nav.mentions
     = yield
     %footer
+      = content_for :footer
       Roy is open source software for Slack users.
       %a{:href => "https://github.com/captn3m0/roy"} [Source Code]

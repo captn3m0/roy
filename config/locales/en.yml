@@ -27,3 +27,4 @@ en:
     - I have a plan
     - I am groot
   no_such_team: "No such team exists. Please login at least once to create a team: %{url}"
+  unauthorized: "You are not authorized to access this team. Please login"
