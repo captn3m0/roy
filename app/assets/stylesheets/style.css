@@ -31,6 +31,9 @@ article ul{
 article li{
   margin-top:3px;
 }
+article li .channel{
+  display: none;
+}
 footer{
   height: 2em;
   bottom: 0px;
