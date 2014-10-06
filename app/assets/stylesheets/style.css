@@ -26,7 +26,7 @@ article{
   margin-top: 20px;
 }
 article ul{
-  list-style-type:disc;
+  list-style-type:none;
 }
 article li{
   margin-top:3px;
@@ -38,4 +38,9 @@ footer{
 }
 .done{
   cursor: pointer;
+}
+.list-head{
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
