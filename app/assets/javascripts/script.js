@@ -67,10 +67,12 @@ $(document).ready(function(){
 $(window).load(function(){
   $('article li').each(function(i, item){
     var $item = $(item);
-    $item.tooltipster({
-      content: $('<span><a class="done" data-id="'+$item.data('id')+'">done</a></span>'),
-      position: "left"
-    });
+    if($item.data('done')!==""){
+      $item.tooltipster({
+        content: $('<span><a class="done" data-id="'+$item.data('id')+'">done</a></span>'),
+        position: "left"
+      });
+    }
     var closed = "";
     if($item.find("strike").length>0){
       closed = "<br>Closed: "+$item.find('strike').data('closed');
