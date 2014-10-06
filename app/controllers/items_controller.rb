@@ -21,9 +21,13 @@ class ItemsController < ApplicationController
 
   # The only way to update an item is to mark it as done
   def update
-    # TODO - Check if user has permissions to do this
     item = Item.find params[:id]
-    item.touch
-    render plain: "The item was marked as done"
+    @team_names = session[:team].map{|h| h['name']}.uniq
+    if @team_names.include? item.team.name
+      item.touch
+      render plain: "The item was marked as done"
+    else
+      render plain: "You do not have authorization to edit this item", :status=>:unauthorized
+    end
   end
 end

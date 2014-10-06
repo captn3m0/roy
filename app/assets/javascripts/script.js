@@ -55,7 +55,7 @@ $(document).ready(function(){
           alert(response);
         },
         error: function (err){
-          alert('Error');
+          alert('An error occured. Maybe you don\'t have sufficient privileges for this operation');
         }
     });
   });
