@@ -6,7 +6,7 @@ gem 'dotenv-rails', :groups => [:development, :test]
 gem 'rails', '4.2.0.beta2'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', group: :test
-gem 'mysql'
+gem 'mysql2'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
